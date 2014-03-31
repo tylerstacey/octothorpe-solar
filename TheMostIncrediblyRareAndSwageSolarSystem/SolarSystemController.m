@@ -129,11 +129,15 @@
 -(void)zoomOut {
     if (viewingRadius < 20){
         viewingRadius += 0.10;
+        CGPoint point = CGPointMake(0, 0);
+        [self panSolarSystem:point];
     }
 }
 -(void)zoomIn {
     if (viewingRadius > 3){
         viewingRadius -= 0.10;
+        CGPoint point = CGPointMake(0, 0);
+        [self panSolarSystem:point];
     }
 }
 
