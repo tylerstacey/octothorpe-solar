@@ -130,21 +130,27 @@
     if (viewingRadius < 20){
         viewingRadius += 0.10;
         CGPoint point = CGPointMake(0, 0);
-        [self panSolarSystem:point];
+        [self panSolarSystem:point isTouched:NO];
     }
 }
+
 -(void)zoomIn {
     if (viewingRadius > 3){
         viewingRadius -= 0.10;
         CGPoint point = CGPointMake(0, 0);
-        [self panSolarSystem:point];
+        [self panSolarSystem:point isTouched:NO];
     }
 }
 
--(void)panSolarSystem:(CGPoint)moveDist{
+-(void)panSolarSystem:(CGPoint)moveDist isTouched:(BOOL)isTouched{
 	float radianX, radianY;
-    radianX = -1*moveDist.x/5 * (3.14/180.0f);
-    radianY = moveDist.y/5 * (3.14/180.0f);
+    if(isTouched == NO){
+        radianX = -1*moveDist.x*90 * (3.14/180.0f);
+        radianY = moveDist.y*90 * (3.14/180.0f);
+    } else {
+        radianX = -1*moveDist.x/5 * (3.14/180.0f);
+        radianY = moveDist.y/5 * (3.14/180.0f);
+    }
     eyePosition[X_VALUE] = (float)sin(radianY) * viewingRadius * (float)sin(radianX);
     eyePosition[Y_VALUE] = (float)cos(radianY) * viewingRadius;
     eyePosition[Z_VALUE] = (float)sin(radianY) * viewingRadius * (float)cos(radianX);

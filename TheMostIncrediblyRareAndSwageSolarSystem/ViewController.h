@@ -11,6 +11,9 @@
 #import "SolarSystem.h"
 #import "SolarSystemController.h"
 
+#define kFILTERMODELOWPASS  1
+#define kMOTIONUPDATEINTERVAL 15.0
+
 @interface ViewController : GLKViewController {
     SolarSystemController *solarSystem;
 };

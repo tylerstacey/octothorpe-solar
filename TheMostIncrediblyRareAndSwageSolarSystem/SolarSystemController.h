@@ -37,7 +37,7 @@
 -(void)executeSolarSystem;
 -(void)zoomOut;
 -(void)zoomIn;
--(void)panSolarSystem:(CGPoint)moveDist;
+-(void)panSolarSystem:(CGPoint)moveDist isTouched:(BOOL)isTouched;
 -(void)moveCameraPlanet:(CGPoint)moveDist;
 -(void)pauseRotation;
 -(void)resumeRotation;

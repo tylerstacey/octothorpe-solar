@@ -13,11 +13,19 @@
 @interface ViewController () {
     int _touchArea;
 	CGPoint _startPos, _moveDist[2];
+    float _avgX, _avgY, _avgZ;
+    float _varX, _varY, _varZ;
+    int _filterMode;
+    BOOL isTouched;
     
 }
 
 @property (strong, nonatomic) EAGLContext *context;
 @property (strong, nonatomic) GLKBaseEffect *effect;
+
+@property (nonatomic, strong) CMMotionManager *motman;
+@property (nonatomic, strong) NSTimer *timer;
+
 @end
 
 
@@ -53,39 +61,24 @@
     segment.tintColor = [UIColor whiteColor];
     [self.view addSubview:segment];
     [segment addTarget:self action:@selector(segmentValueChaged:) forControlEvents:UIControlEventValueChanged];
+    
+    
+    self.motman = [CMMotionManager new];
+    if ((self.motman.accelerometerAvailable)&&(self.motman.gyroAvailable))
+        // alternative: self.motman.deviceMotionAvailable == YES iff both accelerometer and gyros are available.
+    {
+        [self startMonitoringMotion];
+    }
+    else
+        NSLog(@"Oh well, accelerometer or gyro unavailable...");
+    
+    _filterMode = kFILTERMODELOWPASS;
+    _avgX = _avgY = _avgZ = 0.0;
+    _varX = _varY = _varZ = 0.0;
+    
+    
     [self initLighting];
     [self setClipping];
-}
-- (void)handlePinchFrom:(UIPinchGestureRecognizer *)recognizer {
-    if(recognizer.scale > 1){
-        [solarSystem zoomOut];
-    } else {
-        [solarSystem zoomIn];
-    }
-}
-
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-	
-	// get touch location & iPhone display size
-	CGPoint pos = [[touches anyObject] locationInView:self.view];
-	
-	_touchArea = 1;
-	_startPos.x = pos.x - _moveDist[_touchArea].x;
-	_startPos.y = pos.y - _moveDist[_touchArea].y;
-}
-
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-	
-	// get touch location & iPhone display size
-	CGPoint pos = [[touches anyObject] locationInView:self.view];
-	
-	_moveDist[_touchArea].x = pos.x - _startPos.x;
-	_moveDist[_touchArea].y = pos.y - _startPos.y;
-    [solarSystem panSolarSystem:_moveDist[1]];
-}
-
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-	
 }
 
 #pragma mark - UI event handlers
@@ -142,7 +135,7 @@
 	float aspectRatio;
 	const float zNear = .1;
 	const float zFar = 1000;
-	const float fieldOfView = 90.0;
+	const float fieldOfView = 90;
 	GLfloat	size;
 	
 	CGRect frame = [[UIScreen mainScreen] bounds];
@@ -158,6 +151,86 @@
 	glViewport(0, 0, frame.size.width, frame.size.height);
 	
 	glMatrixMode(GL_MODELVIEW);
+}
+
+- (void)handlePinchFrom:(UIPinchGestureRecognizer *)recognizer {
+    if(recognizer.scale > 1){
+        [solarSystem zoomOut];
+        isTouched = NO;
+    } else {
+        [solarSystem zoomIn];
+        isTouched = NO;
+    }
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    isTouched = YES;
+	// get touch location & iPhone display size
+	CGPoint pos = [[touches anyObject] locationInView:self.view];
+	
+	_touchArea = 1;
+	_startPos.x = pos.x - _moveDist[_touchArea].x;
+	_startPos.y = pos.y - _moveDist[_touchArea].y;
+}
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+	// get touch location & iPhone display size
+	CGPoint pos = [[touches anyObject] locationInView:self.view];
+	
+	_moveDist[_touchArea].x = pos.x - _startPos.x;
+	_moveDist[_touchArea].y = pos.y - _startPos.y;
+    [solarSystem panSolarSystem:_moveDist[1] isTouched:YES];
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    isTouched = NO;
+}
+
+#pragma mark - service methods
+- (void)startMonitoringMotion
+{
+    self.motman.accelerometerUpdateInterval = 1.0/kMOTIONUPDATEINTERVAL;
+    self.motman.gyroUpdateInterval = 1.0/kMOTIONUPDATEINTERVAL;
+    self.motman.showsDeviceMovementDisplay = YES;
+    [self.motman startAccelerometerUpdates];
+    [self.motman startGyroUpdates];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:self.motman.accelerometerUpdateInterval
+                                                  target:self selector:@selector(pollMotion:)
+                                                userInfo:nil
+                                                 repeats:YES];
+}
+
+- (void)stopMonitoringMotion
+{
+    [self.motman stopAccelerometerUpdates];
+    [self.motman stopGyroUpdates];
+}
+
+- (void)pollMotion:(NSTimer *)timer
+{
+    CMAcceleration acc = self.motman.accelerometerData.acceleration;
+    float x, y, z;
+    [self addAcceleration:acc];
+    x = _avgX;
+    y = _avgY;
+    z = _avgZ;
+    NSLog(@"x value%f", x);
+    NSLog(@"y value%f", y);
+    if(isTouched == NO){
+        [solarSystem panSolarSystem:CGPointMake(x, y) isTouched:NO];
+    }
+}
+
+#pragma mark - helpers
+- (void)addAcceleration:(CMAcceleration)acc
+{
+    float alpha = 0.1;
+    _avgX = alpha*acc.x + (1-alpha)*_avgX;
+    _avgY = alpha*acc.y + (1-alpha)*_avgY;
+    _avgZ = alpha*acc.z + (1-alpha)*_avgZ;
+    _varX = acc.x - _avgX;
+    _varY = acc.y - _avgY;
+    _varZ = acc.z - _avgZ;
 }
 
 
