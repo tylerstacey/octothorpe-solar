@@ -105,10 +105,14 @@
 }
 
 -(void)zoomOut {
-    viewingRadius += 0.10;
+    if (viewingRadius < 20){
+        viewingRadius += 0.10;
+    }
 }
 -(void)zoomIn {
-    viewingRadius -= 0.10;
+    if (viewingRadius > 3){
+        viewingRadius -= 0.10;
+    }
 }
 
 -(void)panSolarSystem:(CGPoint)moveDist{
