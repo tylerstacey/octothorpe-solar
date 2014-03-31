@@ -47,6 +47,12 @@
 	
     UIPinchGestureRecognizer *pinchRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinchFrom:)];
     [self.view addGestureRecognizer:pinchRecognizer];
+    
+    UISegmentedControl *segment = [[UISegmentedControl alloc]initWithItems:[NSArray arrayWithObjects:@"Pause Rotation", @"Resume Rotation", nil]];
+    segment.frame = CGRectMake(20.0, 20.0, 300.0, 44.0);
+    segment.tintColor = [UIColor whiteColor];
+    [self.view addSubview:segment];
+    [segment addTarget:self action:@selector(segmentValueChaged:) forControlEvents:UIControlEventValueChanged];
     [self initLighting];
     [self setClipping];
 }
@@ -80,6 +86,19 @@
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
 	
+}
+
+#pragma mark - UI event handlers
+- (IBAction) segmentValueChaged:(UISegmentedControl *)sender
+{
+    switch (sender.selectedSegmentIndex) {
+        case 0:
+            [solarSystem pauseRotation];
+            break;
+        case 1:
+            [solarSystem resumeRotation];
+            break;
+    }
 }
 
 #pragma mark - GLKView and GLKViewController delegate methods

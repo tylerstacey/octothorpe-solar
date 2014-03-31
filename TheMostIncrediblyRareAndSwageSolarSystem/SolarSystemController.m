@@ -26,6 +26,7 @@
     eyeXtemp = 0;
     eyeYtemp = 1;
     eyeZtemp = 0;
+    rotate = YES;
     planetSun = [[Planet alloc] initWithStacks:50 Slices:50 Radius:[self earthWidths:2.0] Squash:1.0 OrbitalPeriod:0.0 DistanceFromSun:[self auFromTheSun:0.0] TrackingPlanet:planetSun TextureFile:@"Sun.png"];
 	[planetSun setPositionX:0.0 Y:0.0 Z:0.0];
     
@@ -60,27 +61,48 @@
 	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, white);
     
 	glPushMatrix();
-    [planetMercury updatePosition];
+    if (rotate) {
+        [planetMercury updatePosition:NO];
+    } else {
+        [planetMercury updatePosition:YES];
+    }
 	[planetMercury drawPlanet];
     glPopMatrix();
 
     glPushMatrix();
-     [planetVenus updatePosition];
+    if (rotate){
+        [planetVenus updatePosition:NO];
+    } else {
+        [planetVenus updatePosition:YES];
+
+    }
      [planetVenus drawPlanet];
     glPopMatrix();
     
     glPushMatrix();
-    [planetMoon updatePosition:YES];
+    if (rotate){
+        [planetMoon updatePosition:YES isPaused:NO];
+    } else {
+        [planetMoon updatePosition:YES isPaused:YES];
+    }
     [planetMoon drawPlanet];
     glPopMatrix();
     
     glPushMatrix();
-     [planetEarth updatePosition];
+    if (rotate){
+        [planetEarth updatePosition:NO];
+    } else {
+        [planetEarth updatePosition:YES];
+    }
      [planetEarth drawPlanet];
     glPopMatrix();
     
     glPushMatrix();
-     [planetMars updatePosition];
+    if (rotate){
+        [planetMars updatePosition:NO];
+    } else {
+        [planetMars updatePosition:YES];
+    }
      [planetMars drawPlanet];
     glPopMatrix();
 	
@@ -127,5 +149,11 @@
     eyeYtemp = (float)cos(radianY-1) * viewingRadius;
     eyeZtemp = (float)sin(radianY-1) * (float)cos(radianX) * viewingRadius;
 }
+-(void)pauseRotation {
+    rotate = NO;
+}
 
+-(void)resumeRotation {
+    rotate = YES;
+}
 @end

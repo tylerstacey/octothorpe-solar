@@ -232,24 +232,28 @@
 	*z = planetPos[2];
 }
 
--(void)updatePosition {
-    GLfloat x, y, z;
-    [trackingPlanet getPositionX:&x Y:&y Z:&z];
-    planetAngle += planetOrbitalPeroid;
-	float radian;
-    radian = planetAngle * (3.14/180.0f);
-    planetPos[0] = (float)sin(radian) * planetDistanceFromSun + x;
-    planetPos[2] = (float)cos(radian) * planetDistanceFromSun + z;
+-(void)updatePosition:(BOOL)isPaused{
+    if (isPaused == NO){
+        GLfloat x, y, z;
+        [trackingPlanet getPositionX:&x Y:&y Z:&z];
+        planetAngle += planetOrbitalPeroid;
+        float radian;
+        radian = planetAngle * (3.14/180.0f);
+        planetPos[0] = (float)sin(radian) * planetDistanceFromSun + x;
+        planetPos[2] = (float)cos(radian) * planetDistanceFromSun + z;
+    }
 	glTranslatef(planetPos[0],planetPos[1],planetPos[2]);
 }
--(void)updatePosition:(BOOL)isMoon {
-    GLfloat x, y, z;
-    [trackingPlanet getPositionX:&x Y:&y Z:&z];
-    planetAngle += 1.0/planetOrbitalPeroid;
-	float radian;
-    radian = planetAngle * (3.14/180.0f);
-    planetPos[0] = (float)sin(radian) * planetDistanceFromSun + x;
-    planetPos[2] = (float)cos(radian) * planetDistanceFromSun + z;
+-(void)updatePosition:(BOOL)isMoon isPaused:(BOOL)isPaused {
+    if (isPaused == NO){
+        GLfloat x, y, z;
+        [trackingPlanet getPositionX:&x Y:&y Z:&z];
+        planetAngle += 1.0/planetOrbitalPeroid;
+        float radian;
+        radian = planetAngle * (3.14/180.0f);
+        planetPos[0] = (float)sin(radian) * planetDistanceFromSun + x;
+        planetPos[2] = (float)cos(radian) * planetDistanceFromSun + z;
+    }
 	glTranslatef(planetPos[0],planetPos[1],planetPos[2]);
 }
 

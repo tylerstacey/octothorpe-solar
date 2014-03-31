@@ -28,6 +28,8 @@
     GLfloat eyeXtemp;
     GLfloat eyeZtemp;
     GLfloat viewingRadius;
+    
+    BOOL rotate;
 }
 
 -(id)init;
@@ -37,5 +39,7 @@
 -(void)zoomIn;
 -(void)panSolarSystem:(CGPoint)moveDist;
 -(void)moveCameraPlanet:(CGPoint)moveDist;
+-(void)pauseRotation;
+-(void)resumeRotation;
 
 @end
