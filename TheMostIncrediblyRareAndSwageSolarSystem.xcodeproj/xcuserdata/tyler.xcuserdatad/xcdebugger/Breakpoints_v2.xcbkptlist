@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TheMostIncrediblyRareAndSwageSolarSystem/ViewController.m"
+            timestampString = "417917335.471016"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "13"
+            endingLineNumber = "13"
+            landmarkName = "@interface ViewController()"
+            landmarkType = "2">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[ViewController context]"
+                  moduleName = "TheMostIncrediblyRareAndSwageSolarSystem"
+                  urlString = "file:///Users/tyler/4768/TheMostIncrediblyRareAndSwageSolarSystem/TheMostIncrediblyRareAndSwageSolarSystem/ViewController.m"
+                  timestampString = "417293261.820058"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18"
+                  offsetFromSymbolStart = "24">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[ViewController setContext:]"
+                  moduleName = "TheMostIncrediblyRareAndSwageSolarSystem"
+                  urlString = "file:///Users/tyler/4768/TheMostIncrediblyRareAndSwageSolarSystem/TheMostIncrediblyRareAndSwageSolarSystem/ViewController.m"
+                  timestampString = "417293261.820293"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "18"
+                  endingLineNumber = "18"
+                  offsetFromSymbolStart = "31">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
