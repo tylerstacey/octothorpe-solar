@@ -33,7 +33,6 @@
 
 -(bool)drawPlanet;
 -(void)updatePosition:(BOOL)isPaused;
--(void)updatePosition:(BOOL)isMoon isPaused:(BOOL)isPaused;
 -(void)setPositionX:(GLfloat)x Y:(GLfloat)y Z:(GLfloat)z;
 -(void)getPositionX:(GLfloat *)x Y:(GLfloat *)y Z:(GLfloat *)z;
 -(id)initWithStacks:(GLint)stacks Slices:(GLint)slices Radius:(GLfloat)radius Squash:(GLfloat)squash OrbitalPeriod:(GLfloat)orbitalPeriod DistanceFromSun:(GLfloat)distanceFromSun TrackingPlanet:(Planet *)planet TextureFile:(NSString *)textureFile;

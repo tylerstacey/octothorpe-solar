@@ -81,9 +81,9 @@
     
     glPushMatrix();
     if (rotate){
-        [planetMoon updatePosition:YES isPaused:NO];
+        [planetMoon updatePosition:NO];
     } else {
-        [planetMoon updatePosition:YES isPaused:YES];
+        [planetMoon updatePosition:YES];
     }
     [planetMoon drawPlanet];
     glPopMatrix();
