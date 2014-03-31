@@ -40,7 +40,7 @@
 	[planetEarth setPositionX:0.0 Y:0.0 Z:[self auFromTheSun:1.0]];
     
     planetMoon = [[Planet alloc] initWithStacks:50 Slices:50 Radius:[self earthWidths:0.273] Squash:1.0 OrbitalPeriod:0.0748 DistanceFromSun:[self auFromTheSun:0.257] TrackingPlanet:planetEarth TextureFile:@"Moon.png"];
-	[planetMoon setPositionX:0.0 Y:0.0 Z:[self auFromTheSun:1.0]];
+	[planetMoon setPositionX:0.0 Y:0.0 Z:[self auFromTheSun:0.5]];
     
     planetMars = [[Planet alloc] initWithStacks:50 Slices:50 Radius:[self earthWidths:0.532] Squash:1.0 OrbitalPeriod:1.881 DistanceFromSun:[self auFromTheSun:1.524] TrackingPlanet:planetSun TextureFile:@"Mars.png"];
     [planetMars setPositionX:0.0 Y:0.0 Z:[self auFromTheSun:1.524]];
@@ -145,11 +145,11 @@
 -(void)panSolarSystem:(CGPoint)moveDist isTouched:(BOOL)isTouched{
 	float radianX, radianY;
     if(isTouched == NO){
-        radianX = -1*moveDist.x*90 * (3.14/180.0f);
-        radianY = moveDist.y*90 * (3.14/180.0f);
+        radianX = 1*moveDist.x*90 * (3.14/180.0f);
+        radianY = -moveDist.y*90 * (3.14/180.0f);
     } else {
-        radianX = -1*moveDist.x/5 * (3.14/180.0f);
-        radianY = moveDist.y/5 * (3.14/180.0f);
+        radianX = 1*moveDist.x/5 * (3.14/180.0f);
+        radianY = -moveDist.y/5 * (3.14/180.0f);
     }
     eyePosition[X_VALUE] = (float)sin(radianY) * viewingRadius * (float)sin(radianX);
     eyePosition[Y_VALUE] = (float)cos(radianY) * viewingRadius;

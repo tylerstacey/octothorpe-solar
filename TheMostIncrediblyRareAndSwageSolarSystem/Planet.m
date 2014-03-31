@@ -243,6 +243,8 @@
         planetPos[2] = (float)cos(radian) * planetDistanceFromSun + z;
     }
 	glTranslatef(planetPos[0],planetPos[1],planetPos[2]);
+    glRotatef(planetAngle, 0, 1, 0);
+    glTranslatef(0,0,0);
 }
 
 -(GLKTextureInfo *)loadTexture:(NSString *)filename {

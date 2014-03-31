@@ -155,10 +155,10 @@
 
 - (void)handlePinchFrom:(UIPinchGestureRecognizer *)recognizer {
     if(recognizer.scale > 1){
-        [solarSystem zoomOut];
+        [solarSystem zoomIn];
         isTouched = NO;
     } else {
-        [solarSystem zoomIn];
+        [solarSystem zoomOut];
         isTouched = NO;
     }
 }
