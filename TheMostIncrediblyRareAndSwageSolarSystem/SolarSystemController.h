@@ -24,6 +24,10 @@
     Planet *planetMars;
     
 	GLfloat	eyePosition[3];
+    GLfloat eyeYtemp;
+    GLfloat eyeXtemp;
+    GLfloat eyeZtemp;
+    GLfloat viewingRadius;
 }
 
 -(id)init;
@@ -32,5 +36,6 @@
 -(void)zoomOut;
 -(void)zoomIn;
 -(void)panSolarSystem:(CGPoint)moveDist;
+-(void)moveCameraPlanet:(CGPoint)moveDist;
 
 @end

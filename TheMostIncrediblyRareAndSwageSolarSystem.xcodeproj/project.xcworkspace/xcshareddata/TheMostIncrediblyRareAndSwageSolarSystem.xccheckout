@@ -5,36 +5,36 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>36AA240E-6E3C-46FE-B3E0-8744EB2E9545</string>
+	<string>4C00AA1E-8128-4C46-9276-852A9559EE85</string>
 	<key>IDESourceControlProjectName</key>
 	<string>TheMostIncrediblyRareAndSwageSolarSystem</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>CDBC8B01-6914-4BDC-BE3C-2189C3F63E2A</key>
-		<string>https://github.com/tylerstacey/4768.git</string>
+		<key>6148E13C-C260-4366-A4E7-865FE9B10B76</key>
+		<string>https://github.com/tylerstacey/octothorpe-solar.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>TheMostIncrediblyRareAndSwageSolarSystem/TheMostIncrediblyRareAndSwageSolarSystem.xcodeproj/project.xcworkspace</string>
+	<string>TheMostIncrediblyRareAndSwageSolarSystem.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>CDBC8B01-6914-4BDC-BE3C-2189C3F63E2A</key>
-		<string>../../..</string>
+		<key>6148E13C-C260-4366-A4E7-865FE9B10B76</key>
+		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/tylerstacey/4768.git</string>
+	<string>https://github.com/tylerstacey/octothorpe-solar.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>CDBC8B01-6914-4BDC-BE3C-2189C3F63E2A</string>
+	<string>6148E13C-C260-4366-A4E7-865FE9B10B76</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>CDBC8B01-6914-4BDC-BE3C-2189C3F63E2A</string>
+			<string>6148E13C-C260-4366-A4E7-865FE9B10B76</string>
 			<key>IDESourceControlWCCName</key>
-			<string>4768</string>
+			<string>TheMostIncrediblyRareAndSwageSolarSystem</string>
 		</dict>
 	</array>
 </dict>

@@ -9,8 +9,8 @@
 #import "SolarSystemController.h"
 #import "SolarSystem.h"
 #include "gluLookAt.h"
-@implementation SolarSystemController
 
+@implementation SolarSystemController
 -(id)init {
     
 	[self initGeometry];
@@ -21,8 +21,11 @@
 -(void)initGeometry {
     eyePosition[X_VALUE] = 0.0;
     eyePosition[Y_VALUE] = 0.0;
-    eyePosition[Z_VALUE] = 6.0;
-    
+    eyePosition[Z_VALUE] = 10.0;
+    viewingRadius = 10.0;
+    eyeXtemp = 0;
+    eyeYtemp = 1;
+    eyeZtemp = 0;
     planetSun = [[Planet alloc] initWithStacks:50 Slices:50 Radius:[self earthWidths:2.0] Squash:1.0 OrbitalPeriod:0.0 DistanceFromSun:[self auFromTheSun:0.0] TrackingPlanet:planetSun TextureFile:@"Sun.png"];
 	[planetSun setPositionX:0.0 Y:0.0 Z:0.0];
     
@@ -52,18 +55,7 @@
     
 	glPushMatrix();
     
-    static GLfloat x, y, z, mahAngle;
-    z = 10.0;
-	float radian;
-    mahAngle += 1.0;
-    radian = mahAngle * (3.14/180.0f);
-    //eyePosition[Y_VALUE] = (float)sin(radian) * z;
-    //eyePosition[Z_VALUE] = (float)cos(radian) * z;
-    //GLfloat eyeYtemp = (float)sin(radian-1) * z;
-    //GLfloat eyeZtemp = (float)cos(radian-1) * z;
-    //[planetEarth getPositionX:&x Y:&y Z:&z];
-    //gluLookAt(0, eyePosition[Y_VALUE], eyePosition[Z_VALUE], 0, 0, 0, 0, eyeYtemp-eyePosition[Y_VALUE],eyeZtemp-eyePosition[Z_VALUE]);
-    glTranslatef(-eyePosition[X_VALUE],-eyePosition[Y_VALUE],-eyePosition[Z_VALUE]);
+    gluLookAt(eyePosition[X_VALUE], eyePosition[Y_VALUE], eyePosition[Z_VALUE], 0, 0, 0, eyeXtemp-eyePosition[X_VALUE],eyeYtemp-eyePosition[Y_VALUE],eyeZtemp-eyePosition[Z_VALUE]);
 	glLightfv(SS_SUNLIGHT,GL_POSITION, sunPos);
 	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, white);
     
@@ -113,16 +105,23 @@
 }
 
 -(void)zoomOut {
-    eyePosition[Z_VALUE] += 0.10;
+    viewingRadius += 0.10;
 }
 -(void)zoomIn {
-    eyePosition[Z_VALUE] -= 0.10;
+    viewingRadius -= 0.10;
 }
 
 -(void)panSolarSystem:(CGPoint)moveDist{
-    eyePosition[X_VALUE] = -1*moveDist.x/100;
-    eyePosition[Y_VALUE] = moveDist.y/100;
+	float radianX, radianY;
+    radianX = -1*moveDist.x/5 * (3.14/180.0f);
+    radianY = moveDist.y/5 * (3.14/180.0f);
+    eyePosition[X_VALUE] = (float)sin(radianY) * viewingRadius * (float)sin(radianX);
+    eyePosition[Y_VALUE] = (float)cos(radianY) * viewingRadius;
+    eyePosition[Z_VALUE] = (float)sin(radianY) * viewingRadius * (float)cos(radianX);
     
+    eyeXtemp = (float)sin(radianY-1) * (float)sin(radianX) * viewingRadius;
+    eyeYtemp = (float)cos(radianY-1) * viewingRadius;
+    eyeZtemp = (float)sin(radianY-1) * (float)cos(radianX) * viewingRadius;
 }
 
 @end
