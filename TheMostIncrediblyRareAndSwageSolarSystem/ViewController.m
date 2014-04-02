@@ -17,6 +17,7 @@
     float _varX, _varY, _varZ;
     int _filterMode;
     BOOL isTouched;
+    BOOL cmDisabled;
     
 }
 
@@ -57,10 +58,16 @@
     [self.view addGestureRecognizer:pinchRecognizer];
     
     UISegmentedControl *segment = [[UISegmentedControl alloc]initWithItems:[NSArray arrayWithObjects:@"Pause Rotation", @"Resume Rotation", nil]];
-    segment.frame = CGRectMake(20.0, 20.0, 300.0, 44.0);
+    segment.frame = CGRectMake(20.0, 20.0, 320.0, 44.0);
     segment.tintColor = [UIColor whiteColor];
     [self.view addSubview:segment];
     [segment addTarget:self action:@selector(segmentValueChaged:) forControlEvents:UIControlEventValueChanged];
+    
+    UISegmentedControl *segment2 = [[UISegmentedControl alloc]initWithItems:[NSArray arrayWithObjects:@"Pause CoreMotion", @"Resume CoreMotion", nil]];
+    segment2.frame = CGRectMake(20.0, 84.0, 380.0, 44.0);
+    segment2.tintColor = [UIColor whiteColor];
+    [self.view addSubview:segment2];
+    [segment2 addTarget:self action:@selector(segment2ValueChaged:) forControlEvents:UIControlEventValueChanged];
     
     
     self.motman = [CMMotionManager new];
@@ -88,19 +95,6 @@
     
     [self initLighting];
     [self setClipping];
-}
-
-#pragma mark - UI event handlers
-- (IBAction) segmentValueChaged:(UISegmentedControl *)sender
-{
-    switch (sender.selectedSegmentIndex) {
-        case 0:
-            [solarSystem pauseRotation];
-            break;
-        case 1:
-            [solarSystem resumeRotation];
-            break;
-    }
 }
 
 #pragma mark - GLKView and GLKViewController delegate methods
@@ -162,6 +156,30 @@
 	glMatrixMode(GL_MODELVIEW);
 }
 
+#pragma mark - UI event handlers
+- (IBAction) segmentValueChaged:(UISegmentedControl *)sender
+{
+    switch (sender.selectedSegmentIndex) {
+        case 0:
+            [solarSystem pauseRotation];
+            break;
+        case 1:
+            [solarSystem resumeRotation];
+            break;
+    }
+}
+
+- (IBAction) segment2ValueChaged:(UISegmentedControl *)sender
+{
+    switch (sender.selectedSegmentIndex) {
+        case 0:
+            cmDisabled = YES;
+            break;
+        case 1:
+            cmDisabled = NO;
+            break;
+    }
+}
 - (void)handlePinchFrom:(UIPinchGestureRecognizer *)recognizer {
     if(recognizer.scale > 1){
         [solarSystem zoomIn];
@@ -225,7 +243,7 @@
     z = _avgZ;
     NSLog(@"x value%f", x);
     NSLog(@"y value%f", y);
-    if(isTouched == NO){
+    if(isTouched == NO && cmDisabled == NO){
         [solarSystem panSolarSystem:CGPointMake(x, y) isTouched:NO];
     }
 }
