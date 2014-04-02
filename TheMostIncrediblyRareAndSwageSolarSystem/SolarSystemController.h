@@ -28,6 +28,7 @@
     GLfloat eyeXtemp;
     GLfloat eyeZtemp;
     GLfloat viewingRadius;
+    NSMutableArray *addedPlanets;
     
     BOOL rotate;
 }
@@ -41,5 +42,6 @@
 -(void)moveCameraPlanet:(CGPoint)moveDist;
 -(void)pauseRotation;
 -(void)resumeRotation;
+-(NSMutableArray *)getPlanets;
 
 @end

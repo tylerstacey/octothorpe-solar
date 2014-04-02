@@ -76,6 +76,15 @@
     _avgX = _avgY = _avgZ = 0.0;
     _varX = _varY = _varZ = 0.0;
     
+    // Create and initialize a tap gesture
+    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc]
+                                             initWithTarget:self action:@selector(respondToTapGesture:)];
+    
+    // Specify that the gesture must be a single tap
+    tapRecognizer.numberOfTapsRequired = 1;
+    
+    // Add the tap gesture recognizer to the view
+    [self.view addGestureRecognizer:tapRecognizer];
     
     [self initLighting];
     [self setClipping];
@@ -231,6 +240,29 @@
     _varX = acc.x - _avgX;
     _varY = acc.y - _avgY;
     _varZ = acc.z - _avgZ;
+}
+
+- (void)respondToTapGesture:(UITapGestureRecognizer *)recognizer {
+    
+    //FIXME Do picking based on ray projection and color.
+    CGPoint pos = [recognizer locationInView:self.view];
+    GLfloat x, y, z;
+    NSMutableArray *planets = [solarSystem getPlanets];
+    CGRect frame = [[UIScreen mainScreen] bounds];
+    pos.x = pos.x - (float)frame.size.width/2;
+    pos.y = pos.y - (float)frame.size.height/2;
+    NSLog(@"Tap x, %f", pos.x);
+    NSLog(@"Tap y, %f", pos.y);
+    for (int i = 0; i < [planets count]; i++){
+        [planets[i] getPositionX:&x Y:&y Z:&z];
+        if (pos.x - 1 <= x <= pos.x + 1){
+            if(pos.y - 1 <= y <= pos.y + 1){
+            NSLog(@"Planet %i x, %f", i, x);
+            NSLog(@"Planet %i y, %f", i, y);
+            break;
+            }
+        }
+    }
 }
 
 

@@ -27,23 +27,30 @@
     eyeYtemp = 1;
     eyeZtemp = 0;
     rotate = YES;
+    addedPlanets = [NSMutableArray array];
     planetSun = [[Planet alloc] initWithStacks:50 Slices:50 Radius:[self earthWidths:2.0] Squash:1.0 OrbitalPeriod:0.0 DistanceFromSun:[self auFromTheSun:0.0] TrackingPlanet:planetSun TextureFile:@"Sun.png"];
 	[planetSun setPositionX:0.0 Y:0.0 Z:0.0];
+    [addedPlanets addObject:planetSun];
     
     planetMercury = [[Planet alloc] initWithStacks:50 Slices:50 Radius:[self earthWidths:0.383] Squash:1.0 OrbitalPeriod:0.240 DistanceFromSun:[self auFromTheSun:0.387] TrackingPlanet:planetSun TextureFile:@"Mercury.png"];
     [planetMercury setPositionX:0.0 Y:0.0 Z:[self auFromTheSun:0.387]];
+    [addedPlanets addObject:planetMercury];
     
     planetVenus = [[Planet alloc] initWithStacks:50 Slices:50 Radius:[self earthWidths:0.950] Squash:1.0 OrbitalPeriod:0.615 DistanceFromSun:[self auFromTheSun:0.723] TrackingPlanet:planetSun TextureFile:@"Venus.png"];
     [planetVenus setPositionX:0.0 Y:0.0 Z:[self auFromTheSun:0.723]];
+    [addedPlanets addObject:planetVenus];
     
 	planetEarth = [[Planet alloc] initWithStacks:50 Slices:50 Radius:[self earthWidths:1.0] Squash:1.0 OrbitalPeriod:1.0 DistanceFromSun:[self auFromTheSun:1.0] TrackingPlanet:planetSun TextureFile:@"Earth.png"];
 	[planetEarth setPositionX:0.0 Y:0.0 Z:[self auFromTheSun:1.0]];
+    [addedPlanets addObject:planetEarth];
     
     planetMoon = [[Planet alloc] initWithStacks:50 Slices:50 Radius:[self earthWidths:0.273] Squash:1.0 OrbitalPeriod:0.0748 DistanceFromSun:[self auFromTheSun:0.257] TrackingPlanet:planetEarth TextureFile:@"Moon.png"];
 	[planetMoon setPositionX:0.0 Y:0.0 Z:[self auFromTheSun:0.5]];
+    [addedPlanets addObject:planetMoon];
     
     planetMars = [[Planet alloc] initWithStacks:50 Slices:50 Radius:[self earthWidths:0.532] Squash:1.0 OrbitalPeriod:1.881 DistanceFromSun:[self auFromTheSun:1.524] TrackingPlanet:planetSun TextureFile:@"Mars.png"];
     [planetMars setPositionX:0.0 Y:0.0 Z:[self auFromTheSun:1.524]];
+    [addedPlanets addObject:planetMars];
     
     
     
@@ -165,5 +172,9 @@
 
 -(void)resumeRotation {
     rotate = YES;
+}
+
+-(NSMutableArray *)getPlanets {
+    return addedPlanets;
 }
 @end
