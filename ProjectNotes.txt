@@ -1,0 +1,6 @@
+- Add ability to look from the perspective of a planet.
+- Add ability for planet picking to display information.
+- Add ability to look at any planet from any planet.
+- Add comments to code, refactor and tidy up.
+
+- Redo presentation with a slide show and more complete demonstration. 
