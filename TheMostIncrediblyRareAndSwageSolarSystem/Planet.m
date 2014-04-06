@@ -2,7 +2,7 @@
 //  Planet.m
 //  TheMostIncrediblyRareAndSwageSolarSystem
 //
-//  Created by Tyler Stacey on 2014-03-23.
+//  Created by Tyler Stacey, Terri-Lynn Rimmer, Mark Gauci on 2014-03-23.
 //  Copyright (c) 2014 Tyler Stacey. All rights reserved.
 //
 
@@ -242,8 +242,15 @@
         planetPos[0] = (float)sin(radian) * planetDistanceFromSun + x;
         planetPos[2] = (float)cos(radian) * planetDistanceFromSun + z;
     }
+    NSLog(@"ORBIT %f ", planetOrbitalPeroid);
+    
 	glTranslatef(planetPos[0],planetPos[1],planetPos[2]);
-    glRotatef(planetAngle, 0, 1, 0);
+    float orb = [[NSString stringWithFormat:@"%.3f",planetOrbitalPeroid]floatValue];
+    float venusOrb = [[NSString stringWithFormat:@"%.3f",0.615]floatValue];
+    if(orb==venusOrb)
+        glRotatef(-planetAngle, 0, 1, 0);
+    else
+        glRotatef(planetAngle, 0, 1, 0);
     glTranslatef(0,0,0);
 }
 

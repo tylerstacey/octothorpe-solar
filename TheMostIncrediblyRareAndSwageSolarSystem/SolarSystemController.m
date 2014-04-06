@@ -2,12 +2,13 @@
 //  SolarSystemController.m
 //  TheMostIncrediblyRareAndSwageSolarSystem
 //
-//  Created by Tyler Stacey on 2014-03-23.
+//  Created by Tyler Stacey, Terri-Lynn Rimmer, Mark Gauci on 2014-03-23.
 //  Copyright (c) 2014 Tyler Stacey. All rights reserved.
 //
 
 #import "SolarSystemController.h"
 #import "SolarSystem.h"
+#import "ViewController.h"
 #include "gluLookAt.h"
 
 @implementation SolarSystemController
@@ -55,16 +56,50 @@
     
     
 }
+-(void) selectedView:(int)index{
+    glPushMatrix();
+    GLfloat x;
+    GLfloat y;
+    GLfloat z;
+    switch (index) {
+        case 0:
+            gluLookAt(eyePosition[X_VALUE], eyePosition[Y_VALUE], eyePosition[Z_VALUE], 0, 0, 0, eyeXtemp-eyePosition[X_VALUE],eyeYtemp-eyePosition[Y_VALUE],eyeZtemp-eyePosition[Z_VALUE]);
+            break;
+        case 1:
+            [planetMercury getPositionX:&x Y:&y Z:&z];
+            gluLookAt(x, y, z, 0, 0, 0, 0,eyeYtemp-eyePosition[Y_VALUE],0);
+            break;
+        case 2:
+            [planetVenus getPositionX:&x Y:&y Z:&z];
+            gluLookAt(x, y, z, 0, 0, 0, 0,eyeYtemp-eyePosition[Y_VALUE],0);
+            break;
+        case 3:
+            [planetEarth getPositionX:&x Y:&y Z:&z];
+            gluLookAt(x, y, z, 0, 0, 0, 0,eyeYtemp-eyePosition[Y_VALUE],0);
+            break;
+        case 4:
+            [planetMars getPositionX:&x Y:&y Z:&z];
+            gluLookAt(x, y, z, 0, 0, 0, 0,eyeYtemp-eyePosition[Y_VALUE],0);
+            break;
+        case 5:
+            [planetEarth getPositionX:&x Y:&y Z:&z];
+            gluLookAt(x, y, z, 0, 0, 0, 0,eyeYtemp-eyePosition[Y_VALUE],0);
+            break;
+        case 6:
+            [planetSun getPositionX:&x Y:&y Z:&z];
+            gluLookAt(x, y, z, 0, 0, 0, 0,eyeYtemp-eyePosition[Y_VALUE],0);
+            break;
+    }
+}
 -(void)executeSolarSystem {
     
 	GLfloat white[] = {1.0,1.0,1.0,1.0};
 	GLfloat black[] = {0.0,0.0,0.0,0.0};
 	GLfloat sunPos[3] = {0.0,0.0,0.0};
     
-	glPushMatrix();
+   
     
-    gluLookAt(eyePosition[X_VALUE], eyePosition[Y_VALUE], eyePosition[Z_VALUE], 0, 0, 0, eyeXtemp-eyePosition[X_VALUE],eyeYtemp-eyePosition[Y_VALUE],eyeZtemp-eyePosition[Z_VALUE]);
-	glLightfv(SS_SUNLIGHT,GL_POSITION, sunPos);
+    glLightfv(SS_SUNLIGHT,GL_POSITION, sunPos);
 	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, white);
     
 	glPushMatrix();
@@ -83,7 +118,7 @@
         [planetVenus updatePosition:YES];
 
     }
-     [planetVenus drawPlanet];
+    [planetVenus drawPlanet];
     glPopMatrix();
     
     glPushMatrix();

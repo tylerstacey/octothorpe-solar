@@ -2,7 +2,7 @@
 //  ViewController.m
 //  TheMostIncrediblyRareAndSwageSolarSystem
 //
-//  Created by Tyler Stacey on 2014-03-23.
+//  Created by Tyler Stacey, Terri-Lynn Rimmer, Mark Gauci on 2014-03-23.
 //  Copyright (c) 2014 Tyler Stacey. All rights reserved.
 //
 
@@ -18,7 +18,8 @@
     int _filterMode;
     BOOL isTouched;
     BOOL cmDisabled;
-    
+    NSArray *strPlanets;
+    NSInteger arrIndex;
 }
 
 @property (strong, nonatomic) EAGLContext *context;
@@ -36,7 +37,8 @@
 @synthesize effect = _effect;
 
 -(void)viewDidLoad {
-    
+    strPlanets = [NSArray arrayWithObjects:@"Omniscient", @"Mercury", @"Venus", @"Earth", @"Mars", @"Sun", nil];
+    arrIndex = 2;
     [super viewDidLoad];
     
     self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
@@ -64,11 +66,16 @@
     [segment addTarget:self action:@selector(segmentValueChaged:) forControlEvents:UIControlEventValueChanged];
     
     UISegmentedControl *segment2 = [[UISegmentedControl alloc]initWithItems:[NSArray arrayWithObjects:@"Pause CoreMotion", @"Resume CoreMotion", nil]];
-    segment2.frame = CGRectMake(20.0, 84.0, 380.0, 44.0);
+    segment2.frame = CGRectMake(20.0, 65.0, 320.0, 44.0);
     segment2.tintColor = [UIColor whiteColor];
     [self.view addSubview:segment2];
     [segment2 addTarget:self action:@selector(segment2ValueChaged:) forControlEvents:UIControlEventValueChanged];
-    
+
+    UISegmentedControl *segment3 = [[UISegmentedControl alloc]initWithItems:[NSArray arrayWithObjects:@"Orthographic", @"Mercury", nil]];
+    segment3.frame = CGRectMake(20.0, 110.0, 320.0, 44.0);
+    segment3.tintColor = [UIColor whiteColor];
+    [self.view addSubview:segment3];
+    [segment3 addTarget:self action:@selector(segment3ValueChaged:) forControlEvents:UIControlEventValueChanged];
     
     self.motman = [CMMotionManager new];
     if ((self.motman.accelerometerAvailable)&&(self.motman.gyroAvailable))
@@ -105,7 +112,7 @@
     
 	glClearColor(0.0f,0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
+    [solarSystem selectedView:arrIndex-2];
 	[solarSystem executeSolarSystem];
 }
 
@@ -179,6 +186,31 @@
             cmDisabled = NO;
             break;
     }
+}
+-(void)getIndex:(NSInteger *)index {
+     NSLog(@"INDEX ARR %zd", arrIndex);
+    *index = arrIndex;
+    NSLog(@"INDEX %zd", index);
+}
+- (IBAction) segment3ValueChaged:(UISegmentedControl *)sender
+{
+    // Get the subviews of the view
+    NSArray *subviews = [self.view subviews];
+    UISegmentedControl *segment3 = subviews[4];
+
+    switch (sender.selectedSegmentIndex) {
+        case 0:
+            break;
+        case 1:
+            [segment3 setTitle:[segment3 titleForSegmentAtIndex:[segment3 selectedSegmentIndex]] forSegmentAtIndex:0];
+            [segment3 setTitle:[NSString stringWithFormat:@"%@", strPlanets[arrIndex++]] forSegmentAtIndex:1];
+            if((arrIndex)>=[strPlanets count]){
+                NSLog(@"%lu",(unsigned long)[strPlanets count]);
+                arrIndex=0;
+            }
+            break;
+    }
+    segment3.selectedSegmentIndex = 0;
 }
 - (void)handlePinchFrom:(UIPinchGestureRecognizer *)recognizer {
     if(recognizer.scale > 1){
