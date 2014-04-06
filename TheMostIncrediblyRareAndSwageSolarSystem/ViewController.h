@@ -17,7 +17,6 @@
 @interface ViewController : GLKViewController {
     SolarSystemController *solarSystem;
 };
--(void)getIndex:(NSInteger*)index;
 -(void)viewDidLoad;
 -(void)glkView:(GLKView *)view drawInRect:(CGRect)rect;
 -(void)setClipping;

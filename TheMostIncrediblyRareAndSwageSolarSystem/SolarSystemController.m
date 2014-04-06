@@ -33,9 +33,10 @@
 	[planetSun setPositionX:0.0 Y:0.0 Z:0.0];
     [addedPlanets addObject:planetSun];
     
-    planetMercury = [[Planet alloc] initWithStacks:50 Slices:50 Radius:[self earthWidths:0.383] Squash:1.0 OrbitalPeriod:0.240 DistanceFromSun:[self auFromTheSun:0.387] TrackingPlanet:planetSun TextureFile:@"Mercury.png"];
-    [planetMercury setPositionX:0.0 Y:0.0 Z:[self auFromTheSun:0.387]];
+    planetMercury = [[Planet alloc] initWithStacks:50 Slices:50 Radius:[self earthWidths:0.383] Squash:1.0 OrbitalPeriod:0.240 DistanceFromSun:[self auFromTheSun:0.387] TrackingPlanet:planetSun TextureFile:@"Venus.png"];
+    [planetMercury setPositionX:0.0 Y:0.0 Z:[self auFromTheSun:0.723]];
     [addedPlanets addObject:planetMercury];
+
     
     planetVenus = [[Planet alloc] initWithStacks:50 Slices:50 Radius:[self earthWidths:0.950] Squash:1.0 OrbitalPeriod:0.615 DistanceFromSun:[self auFromTheSun:0.723] TrackingPlanet:planetSun TextureFile:@"Venus.png"];
     [planetVenus setPositionX:0.0 Y:0.0 Z:[self auFromTheSun:0.723]];
@@ -45,7 +46,9 @@
 	[planetEarth setPositionX:0.0 Y:0.0 Z:[self auFromTheSun:1.0]];
     [addedPlanets addObject:planetEarth];
     
-    planetMoon = [[Planet alloc] initWithStacks:50 Slices:50 Radius:[self earthWidths:0.273] Squash:1.0 OrbitalPeriod:0.0748 DistanceFromSun:[self auFromTheSun:0.257] TrackingPlanet:planetEarth TextureFile:@"Moon.png"];
+    GLfloat seeMoonMultiplier=.65;//multiplier to see moon
+
+    planetMoon = [[Planet alloc] initWithStacks:50 Slices:50 Radius:[self earthWidths:0.273] Squash:1.0 OrbitalPeriod:0.0748 DistanceFromSun:[self auFromTheSun:0.257*seeMoonMultiplier] TrackingPlanet:planetEarth TextureFile:@"Moon.png"];
 	[planetMoon setPositionX:0.0 Y:0.0 Z:[self auFromTheSun:0.5]];
     [addedPlanets addObject:planetMoon];
     
@@ -82,10 +85,6 @@
             gluLookAt(x, y, z, 0, 0, 0, 0,eyeYtemp-eyePosition[Y_VALUE],0);
             break;
         case 5:
-            [planetEarth getPositionX:&x Y:&y Z:&z];
-            gluLookAt(x, y, z, 0, 0, 0, 0,eyeYtemp-eyePosition[Y_VALUE],0);
-            break;
-        case 6:
             [planetSun getPositionX:&x Y:&y Z:&z];
             gluLookAt(x, y, z, 0, 0, 0, 0,eyeYtemp-eyePosition[Y_VALUE],0);
             break;

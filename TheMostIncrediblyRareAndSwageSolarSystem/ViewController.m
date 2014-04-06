@@ -37,8 +37,8 @@
 @synthesize effect = _effect;
 
 -(void)viewDidLoad {
-    strPlanets = [NSArray arrayWithObjects:@"Omniscient", @"Mercury", @"Venus", @"Earth", @"Mars", @"Sun", nil];
-    arrIndex = 2;
+    strPlanets = [NSArray arrayWithObjects:@"Orthographic", @"Mercury", @"Venus", @"Earth", @"Mars", @"Sun", nil];
+    arrIndex = 1;
     [super viewDidLoad];
     
     self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES1];
@@ -112,7 +112,7 @@
     
 	glClearColor(0.0f,0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    [solarSystem selectedView:arrIndex-2];
+    [solarSystem selectedView:arrIndex-1];
 	[solarSystem executeSolarSystem];
 }
 
@@ -186,13 +186,7 @@
             cmDisabled = NO;
             break;
     }
-}
--(void)getIndex:(NSInteger *)index {
-     NSLog(@"INDEX ARR %zd", arrIndex);
-    *index = arrIndex;
-    NSLog(@"INDEX %zd", index);
-}
-- (IBAction) segment3ValueChaged:(UISegmentedControl *)sender
+}- (IBAction) segment3ValueChaged:(UISegmentedControl *)sender
 {
     // Get the subviews of the view
     NSArray *subviews = [self.view subviews];
@@ -202,12 +196,22 @@
         case 0:
             break;
         case 1:
-            [segment3 setTitle:[segment3 titleForSegmentAtIndex:[segment3 selectedSegmentIndex]] forSegmentAtIndex:0];
-            [segment3 setTitle:[NSString stringWithFormat:@"%@", strPlanets[arrIndex++]] forSegmentAtIndex:1];
-            if((arrIndex)>=[strPlanets count]){
-                NSLog(@"%lu",(unsigned long)[strPlanets count]);
-                arrIndex=0;
+            arrIndex++;
+            if((arrIndex)>[strPlanets count]){
+                arrIndex=1;
             }
+
+            [segment3 setTitle:[segment3 titleForSegmentAtIndex:[segment3 selectedSegmentIndex]] forSegmentAtIndex:0];
+            
+            if((arrIndex)>=[strPlanets count]){
+                [segment3 setTitle:[NSString stringWithFormat:@"%@", strPlanets[0]] forSegmentAtIndex:1];
+                NSLog(@"%lu",(unsigned long)[strPlanets count]);
+            }
+            else{
+
+                [segment3 setTitle:[NSString stringWithFormat:@"%@", strPlanets[arrIndex]] forSegmentAtIndex:1];
+            }
+
             break;
     }
     segment3.selectedSegmentIndex = 0;

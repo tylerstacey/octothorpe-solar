@@ -239,14 +239,18 @@
         planetAngle += 1.0/planetOrbitalPeroid;
         float radian;
         radian = planetAngle * (3.14/180.0f);
+//        glRotatef(planetAngle, 0, 1, 0);
+        //adding x and z for moon planet (which is non zero)
         planetPos[0] = (float)sin(radian) * planetDistanceFromSun + x;
         planetPos[2] = (float)cos(radian) * planetDistanceFromSun + z;
+        NSLog(@"UPDATE PLANET %f %f %f ", planetPos[0], planetPos[0], planetPos[0]);
     }
-    NSLog(@"ORBIT %f ", planetOrbitalPeroid);
     
 	glTranslatef(planetPos[0],planetPos[1],planetPos[2]);
     float orb = [[NSString stringWithFormat:@"%.3f",planetOrbitalPeroid]floatValue];
     float venusOrb = [[NSString stringWithFormat:@"%.3f",0.615]floatValue];
+
+    //rotate each planet in it's orbit
     if(orb==venusOrb)
         glRotatef(-planetAngle, 0, 1, 0);
     else
