@@ -86,7 +86,7 @@
             break;
         case 5:
             [planetSun getPositionX:&x Y:&y Z:&z];
-            gluLookAt(x, y, z, 0, 0, 0, 0,eyeYtemp-eyePosition[Y_VALUE],0);
+            gluLookAt(0,0,0,eyePosition[X_VALUE], eyePosition[Y_VALUE], eyePosition[Z_VALUE], eyeXtemp-eyePosition[X_VALUE],eyeYtemp-eyePosition[Y_VALUE],eyeZtemp-eyePosition[Z_VALUE]);
             break;
     }
 }
