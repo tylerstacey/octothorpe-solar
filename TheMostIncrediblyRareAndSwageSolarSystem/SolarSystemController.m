@@ -33,7 +33,7 @@
 	[planetSun setPositionX:0.0 Y:0.0 Z:0.0];
     [addedPlanets addObject:planetSun];
     
-    planetMercury = [[Planet alloc] initWithStacks:50 Slices:50 Radius:[self earthWidths:0.383] Squash:1.0 OrbitalPeriod:0.240 DistanceFromSun:[self auFromTheSun:0.387] TrackingPlanet:planetSun TextureFile:@"Venus.png"];
+    planetMercury = [[Planet alloc] initWithStacks:50 Slices:50 Radius:[self earthWidths:0.383] Squash:1.0 OrbitalPeriod:0.240 DistanceFromSun:[self auFromTheSun:0.387] TrackingPlanet:planetSun TextureFile:@"Mercury.png"];
     [planetMercury setPositionX:0.0 Y:0.0 Z:[self auFromTheSun:0.723]];
     [addedPlanets addObject:planetMercury];
 
@@ -85,8 +85,7 @@
             gluLookAt(x, y, z, 0, 0, 0, 0,eyeYtemp-eyePosition[Y_VALUE],0);
             break;
         case 5:
-            [planetSun getPositionX:&x Y:&y Z:&z];
-            gluLookAt(0,0,0,eyePosition[X_VALUE], eyePosition[Y_VALUE], eyePosition[Z_VALUE], eyeXtemp-eyePosition[X_VALUE],eyeYtemp-eyePosition[Y_VALUE],eyeZtemp-eyePosition[Z_VALUE]);
+            gluLookAt(0, 0, 0, eyePosition[X_VALUE], eyePosition[Y_VALUE], eyePosition[Z_VALUE], 0,eyeYtemp-eyePosition[Y_VALUE],0);
             break;
     }
 }

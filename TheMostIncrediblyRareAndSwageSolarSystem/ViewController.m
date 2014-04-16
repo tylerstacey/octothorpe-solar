@@ -19,7 +19,10 @@
     BOOL isTouched;
     BOOL cmDisabled;
     NSArray *strPlanets;
+    NSArray *strLabelMsg;
     NSInteger arrIndex;
+    UILabel *myLabel;
+
 }
 
 @property (strong, nonatomic) EAGLContext *context;
@@ -38,6 +41,13 @@
 
 -(void)viewDidLoad {
     strPlanets = [NSArray arrayWithObjects:@"Orthographic", @"Mercury", @"Venus", @"Earth", @"Mars", @"Sun", nil];
+    strLabelMsg = [NSArray arrayWithObjects:@"Hint: Pinch or drag below, or click the 'Mercury' button to see what happens.",
+                    @"Planet: Mercury              Orbital Period: 0.240         Distance from Sun: 0.387 au",
+                    @"Planet: Venus                Orbital Period: 0.615         Distance from Sun: 0.723 au",
+                    @"Planet: Earth                Orbital Period: 1             Distance from Sun: 1 au ",
+                    @"Planet: Mars                 Orbital Period: 1.881         Distance from Sun: 1.524 au",
+                    @"Planet: Sun                  Orbital Period: N/A           Distance from Sun: 0 au", nil];
+    
     arrIndex = 1;
     [super viewDidLoad];
     
@@ -76,6 +86,18 @@
     segment3.tintColor = [UIColor whiteColor];
     [self.view addSubview:segment3];
     [segment3 addTarget:self action:@selector(segment3ValueChaged:) forControlEvents:UIControlEventValueChanged];
+    
+    myLabel = [[UILabel alloc] initWithFrame:CGRectMake(360.0, 60.0, 220.0, 140.0)];
+    myLabel.text = strLabelMsg[0];
+    myLabel.textColor = [UIColor whiteColor];
+    myLabel.shadowColor = [UIColor blackColor];
+    myLabel.shadowOffset = CGSizeMake(1,1);
+//    myLabel.backgroundColor=[UIColor greenColor];//uncomment to see size of label
+    myLabel.numberOfLines = 3;
+    
+    myLabel.hidden=NO;//here is correctly hidden
+    [self.view addSubview:myLabel];
+    
     
     self.motman = [CMMotionManager new];
     if ((self.motman.accelerometerAvailable)&&(self.motman.gyroAvailable))
@@ -204,14 +226,14 @@
             [segment3 setTitle:[segment3 titleForSegmentAtIndex:[segment3 selectedSegmentIndex]] forSegmentAtIndex:0];
             
             if((arrIndex)>=[strPlanets count]){
+                myLabel.text = strLabelMsg[5];
                 [segment3 setTitle:[NSString stringWithFormat:@"%@", strPlanets[0]] forSegmentAtIndex:1];
                 NSLog(@"%lu",(unsigned long)[strPlanets count]);
             }
             else{
-
+                myLabel.text = strLabelMsg[arrIndex-1];
                 [segment3 setTitle:[NSString stringWithFormat:@"%@", strPlanets[arrIndex]] forSegmentAtIndex:1];
             }
-
             break;
     }
     segment3.selectedSegmentIndex = 0;
